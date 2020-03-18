@@ -3,15 +3,13 @@ import { StyleSheet, View, Text } from 'react-native';
 import SumUp from 'react-native-sum-up';
 
 export default function App() {
-  const [deviceName, setDeviceName] = React.useState('');
-
   React.useEffect(() => {
-    SumUp.getDeviceName().then(setDeviceName);
+    // SumUp.makePayment().then(setDeviceName);
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Device name: {deviceName}</Text>
+      <Text>React-Native-Sum-Up</Text>
     </View>
   );
 }
