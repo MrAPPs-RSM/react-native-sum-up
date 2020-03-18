@@ -2,7 +2,28 @@
 #import <React/RCTConvert.h>
 #import <SMPPayment/SMPPaymentRequest.h>
 
+@implementation NSDictionary (WKDictionary)
+
+- (id)objectForKeyNotNull:(id)key {
+    
+    id object = [self objectForKey:key];
+    if (object == [NSNull null])
+        return nil;
+    
+    return object;
+}
+@end
+
+
 @implementation SumUp
+
+
+- (NSDictionary *)constantsToExport
+{
+    return @{
+              @"SMPCurrencyCodeEUR" : @"EUR",
+              @"SMPCurrencyCodeUSD" : @"USD"};
+}
 
 - (NSString*)setPrefixIfNeeded: (NSString*)number
 {

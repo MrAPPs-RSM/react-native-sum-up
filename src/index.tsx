@@ -1,7 +1,7 @@
 import { NativeModules } from 'react-native';
 
 type SumUpType = {
-  getDeviceName(): Promise<string>;
+  makePayment(): Promise<void>;
 };
 
 const { SumUp } = NativeModules;
