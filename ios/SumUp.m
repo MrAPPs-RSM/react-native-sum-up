@@ -56,8 +56,8 @@ RCT_EXPORT_METHOD(makePayment:(NSDictionary *)request resolver:(RCTPromiseResolv
     [paymentRequest setForeignTransactionID:transactionId];
     [paymentRequest setReceiptPhoneNumber:formattedPhoneNumber];
     [paymentRequest setReceiptEmailAddress:customerEmail];
-    [paymentRequest setCallbackURLSuccess:[NSURL URLWithString:@"phome://result"]];
-    [paymentRequest setCallbackURLFailure:[NSURL URLWithString:@"phome://result"]];
+    [paymentRequest setCallbackURLSuccess:[NSURL URLWithString:@"phome://result/"]];
+    [paymentRequest setCallbackURLFailure:[NSURL URLWithString:@"phome://result/"]];
 
     [paymentRequest openSumUpMerchantApp];
 }
