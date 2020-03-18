@@ -41,9 +41,19 @@ RCT_EXPORT_METHOD(makePayment:(NSDictionary *)request resolver:(RCTPromiseResolv
     NSDecimalNumber *total = [NSDecimalNumber decimalNumberWithString:[RCTConvert NSString:request[@"totalAmount"]]];
     NSString *title = [RCTConvert NSString:request[@"title"]];
     NSString *customerEmail = [RCTConvert NSString:request[@"customerEmail"]];
-    
-    NSString *customerPhoneNumber = [RCTConvert NSString:request[@"customerPhoneNumber"]];
-    NSString *formattedPhoneNumber = [self setPrefixIfNeeded:(customerPhoneNumber)];
+    NSString *customerPhoneNumber = nil;
+    NSString *formattedPhoneNumber = nil;
+    @try{
+      customerPhoneNumber = [RCTConvert NSString:request[@"customerPhoneNumber"]];
+    }
+    @catch(NSException *exception){
+      
+    }
+
+    if (customerPhoneNumber != nil) {
+      formattedPhoneNumber = [self setPrefixIfNeeded:(customerPhoneNumber)];
+    }
+
     NSString *currencyCode = [RCTConvert NSString:request[@"currencyCode"]];
     NSString *transactionId = [[NSUUID UUID] UUIDString];
     
@@ -54,7 +64,11 @@ RCT_EXPORT_METHOD(makePayment:(NSDictionary *)request resolver:(RCTPromiseResolv
                                             affiliateKey:@"e721bf67-7393-4511-a398-02e3c79acfc9"];
 
     [paymentRequest setForeignTransactionID:transactionId];
+    
+    if (customerPhoneNumber != nil) {
     [paymentRequest setReceiptPhoneNumber:formattedPhoneNumber];
+    }
+
     [paymentRequest setReceiptEmailAddress:customerEmail];
     [paymentRequest setCallbackURLSuccess:[NSURL URLWithString:@"phome://result/"]];
     [paymentRequest setCallbackURLFailure:[NSURL URLWithString:@"phome://result/"]];
