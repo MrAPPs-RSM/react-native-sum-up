@@ -3,6 +3,7 @@ export declare enum CurrencyCode {
     USD = "USD"
 }
 declare type PaymentRequestData = {
+    affiliateKey: string;
     title: string;
     totalAmount: string;
     customerEmail: string;

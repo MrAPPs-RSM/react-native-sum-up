@@ -43,25 +43,25 @@ RCT_EXPORT_METHOD(makePayment:(NSDictionary *)request resolver:(RCTPromiseResolv
     NSString *customerEmail = [RCTConvert NSString:request[@"customerEmail"]];
     NSString *customerPhoneNumber = nil;
     NSString *formattedPhoneNumber = nil;
-    @try{
+    
+    if(![request[@"customerPhoneNumber"]isEqual:[NSNull null]])
+    {
       customerPhoneNumber = [RCTConvert NSString:request[@"customerPhoneNumber"]];
     }
-    @catch(NSException *exception){
-      
-    }
-
+    
     if (customerPhoneNumber != nil) {
       formattedPhoneNumber = [self setPrefixIfNeeded:(customerPhoneNumber)];
     }
 
     NSString *currencyCode = [RCTConvert NSString:request[@"currencyCode"]];
+    NSString *affiliateKey = [RCTConvert NSString:request[@"affiliateKey"]];
     NSString *transactionId = [[NSUUID UUID] UUIDString];
     
     SMPPaymentRequest *paymentRequest = [SMPPaymentRequest
                                             paymentRequestWithAmount:total
                                             currency:currencyCode
                                             title:title
-                                            affiliateKey:@"e721bf67-7393-4511-a398-02e3c79acfc9"];
+                                            affiliateKey:affiliateKey];
 
     [paymentRequest setForeignTransactionID:transactionId];
     
@@ -70,8 +70,8 @@ RCT_EXPORT_METHOD(makePayment:(NSDictionary *)request resolver:(RCTPromiseResolv
     }
 
     [paymentRequest setReceiptEmailAddress:customerEmail];
-    [paymentRequest setCallbackURLSuccess:[NSURL URLWithString:@"phome://result/"]];
-    [paymentRequest setCallbackURLFailure:[NSURL URLWithString:@"phome://result/"]];
+    [paymentRequest setCallbackURLSuccess:[NSURL URLWithString:@"phome://result"]];
+    [paymentRequest setCallbackURLFailure:[NSURL URLWithString:@"phome://result"]];
 
     [paymentRequest openSumUpMerchantApp];
 }

@@ -6,6 +6,7 @@ export enum CurrencyCode {
 }
 
 type PaymentRequestData = {
+  affiliateKey: string;
   title: string;
   totalAmount: string;
   customerEmail: string;
