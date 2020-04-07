@@ -45,6 +45,7 @@ class SumUpPackage : ReactPackage {
 
       var transactionId = UUID.randomUUID().toString()
       var title = request.getString("title")
+      var affiliateKey = request.getString("affiliateKey");
       var totalAmount = BigDecimal(request.getString("totalAmount")).setScale(2, RoundingMode.HALF_EVEN)
       var customerEmail = request.getString("customerEmail")
       var customerPhoneNumber = setPrefixIfNeeded(request.getString("customerPhoneNumber"))
@@ -53,15 +54,15 @@ class SumUpPackage : ReactPackage {
 
       var payIntent = Intent(Intent.ACTION_VIEW, Uri.parse(
         "sumupmerchant://pay/1.0"
-          + "?affiliate-key=\"" + AFFILIATE_KEY + "\""
+          + "?affiliate-key=\"" + affiliateKey + "\""
           + "&app-id=" + appId
           + "&total=" + totalAmount
-          + "&currency=EUR" + currencyCode
+          + "&currency=" + currencyCode
           + "&title=" + title
           + "&receipt-mobilephone=" + customerPhoneNumber
           + "&receipt-email=" + customerEmail
           + "&foreign-tx-id=" + transactionId
-          + "&callback=:" + CALLBACK_SCHEME + "//result"))
+          + "&callback=" + CALLBACK_SCHEME + "://result"))
 
       startActivity(mReactContext, payIntent, null)
 
